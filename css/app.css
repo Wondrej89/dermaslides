@@ -50,8 +50,10 @@ h1,h2,h3,h4,h5 { line-height:1.25; }
 .breadcrumb { display:inline-block; margin-bottom:1rem; }
 .category-head h1 { max-width:950px; margin:.25rem 0; font-size:clamp(1.8rem,5vw,3.2rem); }
 .category-tools { margin-block:1.5rem 2.5rem; }
-.subcategory { scroll-margin-top:70px; }
-.subcategory > h2 { margin:2.5rem 0 .75rem; font-size:1.45rem; }
+.subcategory { margin-top:3rem; scroll-margin-top:70px; }
+.subcategory-header { margin-bottom:1rem; padding-bottom:.65rem; border-bottom:2px solid var(--line); }
+.subcategory-header h2 { margin:0; overflow-wrap:anywhere; font-size:clamp(1.3rem,2vw,1.65rem); font-weight:750; }
+.subcategory-meta { margin:.25rem 0 0; color:var(--muted); font-size:.9rem; }
 .diagnosis { scroll-margin-top:72px; border:1px solid var(--line); border-radius:7px; background:white; margin:.65rem 0; overflow:visible; box-shadow:var(--shadow); }
 .diagnosis-toggle { display:flex; width:100%; min-height:70px; align-items:center; gap:1rem; padding:1rem; border:0; border-radius:6px; background:white; text-align:left; cursor:pointer; }
 .diagnosis.is-open .diagnosis-toggle { position:sticky; top:var(--site-header-height); z-index:4; border-radius:6px 6px 0 0; border-bottom:1px solid var(--line); background:white; box-shadow:0 3px 8px rgb(20 50 60 / 10%); }
