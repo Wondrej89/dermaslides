@@ -41,8 +41,10 @@ async function init() {
       const slug = diagnosisSlug(diagnosis); const contentId = `cases-${slug}`; const diagnosisCases = groupedCases.get(String(diagnosis.diagnosis_id)) || [];
       const content = el("div", { id: contentId, class: "diagnosis-content", hidden: "" });
       const button = el("button", { class: "diagnosis-toggle", type: "button", "aria-expanded": "false", "aria-controls": contentId },
-        el("span", {}, el("strong", { text: diagnosis.canonical_cs || diagnosis.canonical_en }), diagnosis.canonical_en ? el("small", { text: diagnosis.canonical_en }) : null),
-        el("span", { class: "diagnosis-count", text: countLabel(diagnosisCases.length, "případ", "případy", "případů") }));
+        el("span", { class: "diagnosis-name" }, el("strong", { text: diagnosis.canonical_cs || diagnosis.canonical_en }), diagnosis.canonical_en ? el("small", { text: diagnosis.canonical_en }) : null),
+        el("span", { class: "diagnosis-actions" },
+          el("span", { class: "diagnosis-count", text: countLabel(diagnosisCases.length, "případ", "případy", "případů") }),
+          el("span", { class: "diagnosis-icon", "aria-hidden": "true", text: "+" })));
       const open = () => { button.setAttribute("aria-expanded", "true"); content.hidden = false; renderCases(content, diagnosis, diagnosisCases); };
       button.addEventListener("click", () => { if (button.getAttribute("aria-expanded") === "true") { button.setAttribute("aria-expanded", "false"); content.hidden = true; } else open(); });
       const article = el("article", { class: "diagnosis", id: slug }, button, content); section.append(article);
