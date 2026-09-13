@@ -2,9 +2,24 @@ import { countLabel, el } from "./utils.js";
 
 const textBlock = (title, value) => value ? el("div", {}, el("h5", { text: title }), el("p", { text: value })) : null;
 
+export function formatAge(ageSource) {
+  if (!ageSource || String(ageSource).toLowerCase() === "unknown") {
+    return "věk neuveden";
+  }
+
+  const match = String(ageSource).match(/\d+/);
+  if (!match) return String(ageSource);
+
+  const age = Number(match[0]);
+
+  if (age === 1) return "1 rok";
+  if (age >= 2 && age <= 4) return `${age} roky`;
+  return `${age} let`;
+}
+
 function patientTitle(item) {
   const sex = { male: "Muž", female: "Žena", unknown: "neuvedeno" }[String(item.sex_source || "unknown").toLowerCase()] || item.sex_source || "neuvedeno";
-  const age = item.age_source && String(item.age_source).toLowerCase() !== "unknown" ? `${item.age_source} let` : "věk neuveden";
+  const age = formatAge(item.age_source);
   return `${sex}, ${age}`;
 }
 
