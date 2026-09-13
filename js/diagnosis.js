@@ -13,9 +13,18 @@ function renderSlide(slide, diagnosis, index) {
   const card = el("article", { class: "slide-card" });
   if (slide.thumbnail_url) {
     const image = el("img", { src: slide.thumbnail_url, loading: "lazy", alt: `Náhled preparátu: ${diagnosis.canonical_cs}`, decoding: "async" });
-    image.addEventListener("error", () => { image.replaceWith(el("div", { class: "image-placeholder", role: "img", "aria-label": "Náhled preparátu není dostupný", text: "Náhled není dostupný" })); });
-    card.append(el("a", { ...linkAttrs, class: "slide-image" }, image));
-  } else card.append(el("div", { class: "image-placeholder", text: "Náhled není dostupný" }));
+    const imageLink = el("a", { ...linkAttrs, class: "slide-image" }, image);
+    image.addEventListener("error", () => {
+      imageLink.classList.add("slide-image--unavailable");
+      image.replaceWith(el("div", { class: "image-placeholder", role: "img", "aria-label": "Náhled preparátu není dostupný", text: "Náhled není dostupný" }));
+    });
+    card.append(imageLink);
+  } else {
+    const placeholder = el("div", { class: "image-placeholder", role: "img", "aria-label": "Náhled preparátu není dostupný", text: "Náhled není dostupný" });
+    card.append(slide.viewer_url
+      ? el("a", { ...linkAttrs, class: "slide-image slide-image--unavailable" }, placeholder)
+      : el("div", { class: "slide-image slide-image--unavailable" }, placeholder));
+  }
   card.append(el("div", { class: "slide-meta" },
     slide.stain_source ? el("strong", { text: slide.stain_source }) : null,
     slide.slide_id ? el("small", { text: `ID: ${slide.slide_id}` }) : null,
