@@ -6,9 +6,24 @@ import { CATEGORY_ROUTES, categoryForDiagnosis, countLabel, diagnosisSlug, el, f
 const currentSlug = document.body.dataset.category;
 
 function alphabet(diagnoses) {
-  const available = new Set(diagnoses.map((item) => firstLetter(item.canonical_cs)));
+  const available = new Set(diagnoses.map((item) => firstLetter(item.canonical_cs || item.canonical_en)));
   return el("nav", { class: "alphabet", "aria-label": "Abecední rejstřík v kategorii" }, ..."ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((letter) =>
     available.has(letter) ? el("a", { href: `#letter-${letter}`, text: letter }) : el("span", { "aria-disabled": "true", text: letter })));
+}
+
+let letterHighlightTimer;
+
+function showLetterTarget() {
+  const match = decodeURIComponent(location.hash.slice(1)).match(/^letter-([A-Z])$/);
+  if (!match) return;
+  const target = document.getElementById(`letter-${match[1]}`);
+  const article = target?.closest(".diagnosis");
+  if (!target || !article) return;
+  document.querySelector(".diagnosis.is-letter-target")?.classList.remove("is-letter-target");
+  article.classList.add("is-letter-target");
+  target.scrollIntoView({ block: "start" });
+  clearTimeout(letterHighlightTimer);
+  letterHighlightTimer = setTimeout(() => article.classList.remove("is-letter-target"), 1400);
 }
 
 function searchItems(diagnoses, cases, categories) {
@@ -30,8 +45,10 @@ async function init() {
     document.title = `${route.title} | Dermatopatologický atlas`;
     document.querySelector("h1").textContent = route.title;
     document.querySelector("#category-counts").textContent = `${countLabel(selected.length, "diagnóza", "diagnózy", "diagnóz")} · ${countLabel(selectedCases.length, "klinický případ", "klinické případy", "klinických případů")}`;
-    document.querySelector("#category-alphabet").append(alphabet(selected));
+    const alphabetNav = alphabet(selected);
+    document.querySelector("#category-alphabet").append(alphabetNav);
     const list = document.querySelector("#diagnoses");
+    const usedLetters = new Set();
     const subcategories = selected.reduce((groups, diagnosis) => {
       const key = diagnosis.subcategory || "";
       if (!groups.has(key)) groups.set(key, { key, diagnoses: [], caseCount: 0 });
@@ -56,8 +73,11 @@ async function init() {
 
         group.diagnoses.forEach((diagnosis) => {
           const slug = diagnosisSlug(diagnosis); const contentId = `cases-${slug}`; const diagnosisCases = groupedCases.get(String(diagnosis.diagnosis_id)) || [];
+          const letter = firstLetter(diagnosis.canonical_cs || diagnosis.canonical_en);
           const content = el("div", { id: contentId, class: "diagnosis-content", hidden: "" });
-          const button = el("button", { class: "diagnosis-toggle", type: "button", "aria-expanded": "false", "aria-controls": contentId },
+          const letterAnchor = /^[A-Z]$/.test(letter) && !usedLetters.has(letter) ? `letter-${letter}` : null;
+          if (letterAnchor) usedLetters.add(letter);
+          const button = el("button", { class: "diagnosis-toggle", id: letterAnchor, type: "button", "aria-expanded": "false", "aria-controls": contentId },
             el("span", { class: "diagnosis-name" }, el("strong", { text: diagnosis.canonical_cs || diagnosis.canonical_en }), diagnosis.canonical_en ? el("small", { text: diagnosis.canonical_en }) : null),
             el("span", { class: "diagnosis-actions" },
               el("span", { class: "diagnosis-count", text: countLabel(diagnosisCases.length, "případ", "případy", "případů") }),
@@ -68,6 +88,11 @@ async function init() {
           if (decodeURIComponent(location.hash.slice(1)) === slug) requestAnimationFrame(() => { open(); article.scrollIntoView({ block: "start" }); });
         });
     });
+    alphabetNav.addEventListener("click", (event) => {
+      if (event.target.closest('a[href^="#letter-"]')) requestAnimationFrame(showLetterTarget);
+    });
+    window.addEventListener("hashchange", showLetterTarget);
+    requestAnimationFrame(showLetterTarget);
     const generated = await loadSearchIndex();
     setupSearch(document.querySelector("#global-search"), document.querySelector("#search-results"), generated || searchItems(diagnoses, cases, categories));
   } catch (error) { document.querySelector("#diagnoses").append(el("p", { class: "notice", role: "alert", text: `Data se nepodařilo načíst: ${error.message}` })); }
