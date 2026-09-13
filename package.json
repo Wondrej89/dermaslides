@@ -1,0 +1,1 @@
+{"name":"dermatopatologicky-atlas","private":true,"type":"module","scripts":{"build:pages":"node scripts/build-pages.mjs","build:search":"node scripts/build-search-index.mjs","check":"node --check js/app.js && node --check js/category.js && node --check js/data.js && node --check js/diagnosis.js && node --check js/search.js && node --check js/utils.js"}}

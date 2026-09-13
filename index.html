@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="cs" data-base="./">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Český digitální atlas kožní histopatologie."><title>Dermatopatologický atlas</title><link rel="stylesheet" href="css/app.css"></head>
+<body id="top">
+<a class="skip-link" href="#main">Přejít na obsah</a>
+<header class="site-header"><div class="header-inner"><a class="brand" href="./">Dermatopatologický atlas</a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Kategorie</button><nav class="site-nav" id="site-nav" aria-label="Hlavní navigace"><a href="zanetliva-infekcni/">Zánětlivá</a><a href="melanocytarni/">Melanocytární</a><a href="epidermalni-adnexalni/">Epidermální</a><a href="mezenchymalni-vaskularni/">Mezenchymální</a><a href="hematolymfoidni-systemova-vzacna/">Hematolymfoidní a ostatní</a><a href="#search">Vyhledávání</a></nav></div></header>
+<main id="main">
+  <div class="hero"><div class="container"><h1>Dermatopatologický atlas</h1><p class="lead">Digitální atlas kožní histopatologie</p><p class="stats"><span data-total-diagnoses>—</span> diagnóz · <span data-total-cases>—</span> klinických případů</p></div></div>
+  <div class="container">
+    <section id="search" aria-labelledby="search-title"><div class="section-heading"><h2 id="search-title">Vyhledávání v atlasu</h2><p>Hledejte česky nebo anglicky, s diakritikou i bez ní.</p></div><div class="search-wrap"><label class="search-label" for="global-search">Diagnóza nebo klinický údaj</label><input class="search-input" id="global-search" type="search" autocomplete="off" placeholder="Např. bazocelulární nebo basal cell" aria-controls="search-results" aria-expanded="false"><div class="search-results" id="search-results" role="region" aria-live="polite" hidden></div></div></section>
+    <section aria-labelledby="categories-title"><div class="section-heading"><h2 id="categories-title">Hlavní kategorie</h2></div><div class="category-grid" id="category-cards"></div></section>
+    <section aria-labelledby="index-title"><div class="section-heading"><h2 id="index-title">Abecední rejstřík diagnóz</h2></div><div id="alphabet-home"></div><div class="diagnosis-index" id="diagnosis-index"></div></section>
+  </div>
+</main>
+<footer class="site-footer"><div class="container">Digitální preparáty a zdrojová data: <a href="https://vpathwebdev.virtualpathology.leeds.ac.uk/" target="_blank" rel="noopener noreferrer">University of Leeds Virtual Pathology</a>. Tento nezávislý atlas není oficiálním webem ani podporovaným projektem University of Leeds.</div></footer>
+<script type="module" src="js/nav.js"></script><script type="module" src="js/app.js"></script>
+</body></html>
