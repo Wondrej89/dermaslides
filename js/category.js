@@ -45,9 +45,9 @@ async function init() {
         el("span", { class: "diagnosis-actions" },
           el("span", { class: "diagnosis-count", text: countLabel(diagnosisCases.length, "případ", "případy", "případů") }),
           el("span", { class: "diagnosis-icon", "aria-hidden": "true", text: "+" })));
-      const open = () => { button.setAttribute("aria-expanded", "true"); content.hidden = false; renderCases(content, diagnosis, diagnosisCases); };
-      button.addEventListener("click", () => { if (button.getAttribute("aria-expanded") === "true") { button.setAttribute("aria-expanded", "false"); content.hidden = true; } else open(); });
       const article = el("article", { class: "diagnosis", id: slug }, button, content); section.append(article);
+      const open = () => { button.setAttribute("aria-expanded", "true"); article.classList.add("is-open"); content.hidden = false; renderCases(content, diagnosis, diagnosisCases); };
+      button.addEventListener("click", () => { if (button.getAttribute("aria-expanded") === "true") { button.setAttribute("aria-expanded", "false"); article.classList.remove("is-open"); content.hidden = true; } else open(); });
       if (decodeURIComponent(location.hash.slice(1)) === slug) requestAnimationFrame(() => { open(); article.scrollIntoView({ block: "start" }); });
     });
     const generated = await loadSearchIndex();
