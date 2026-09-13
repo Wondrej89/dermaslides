@@ -1,5 +1,5 @@
 import { loadAtlas } from "./data.js";
-import { el, normalize, countLabel } from "./utils.js";
+import { categoryForDiagnosis, countLabel, diagnosisSlug, el, normalize } from "./utils.js";
 import { formatAge } from "./diagnosis.js";
 
 const STORAGE_KEY = "dermaslides-study-session-v1";
@@ -135,8 +135,21 @@ function renderResults() {
   const correct = Object.values(session.answers).filter(Boolean).length;
   const rows = session.caseIds.map((id, index) => {
     const item = atlas.cases.find((candidate) => candidate.id === id);
+    const diagnosis = diagnosisFor(item);
+    const diagnosisName = item.diagnosis_cs || diagnosis?.canonical_cs || "—";
+    const category = diagnosis && categoryForDiagnosis(diagnosis, atlas.categories);
+    const slug = diagnosis && diagnosisSlug(diagnosis);
+    const diagnosisLabel = category?.slug && slug
+      ? el("a", {
+        href: `../${category.slug}/#${slug}`,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        class: "result-diagnosis-link",
+        "aria-label": `Otevřít diagnózu ${diagnosisName} v atlasu v nové kartě`,
+      }, diagnosisName, el("span", { "aria-hidden": "true", text: "↗" }))
+      : document.createTextNode(diagnosisName);
     const result = session.answers[id];
-    return el("tr", {}, el("td", { text: String(index + 1) }), el("td", { text: item.diagnosis_cs || diagnosisFor(item)?.canonical_cs || "—" }),
+    return el("tr", {}, el("td", { text: String(index + 1) }), el("td", {}, diagnosisLabel),
       el("td", { class: result ? "study-result-good" : "study-result-bad", text: result ? "Správně" : "Nevěděl / špatně" }));
   });
   const restart = el("button", { type: "button", class: "study-button", text: "Nový test" });

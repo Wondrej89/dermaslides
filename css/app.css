@@ -110,6 +110,9 @@ h1,h2,h3,h4,h5 { line-height:1.25; }
 .study-results-wrap { overflow-x:auto; }
 .study-results { width:100%; border-collapse:collapse; }
 .study-results th,.study-results td { padding:.7rem .4rem; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+.result-diagnosis-link { color:var(--blue); text-underline-offset:.15em; }
+.result-diagnosis-link:hover,.result-diagnosis-link:focus-visible { color:var(--blue-dark); }
+.result-diagnosis-link span { margin-left:.2em; font-size:.85em; }
 .study-result-good { color:#176438; font-weight:700; }
 .study-result-bad { color:#8c2f28; font-weight:700; }
 .study-error { color:#9b2c25; font-weight:650; }
