@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "language": "cs",
+    "source": "Leeds atlas diagnosis catalog v1"
+  },
+  "categories": [
+    {
+      "category": "inflammatory-infectious-reactive",
+      "category_cs": "Zánětlivá, infekční a reaktivní onemocnění",
+      "diagnosis_count": 294,
+      "case_count": 526
+    },
+    {
+      "category": "melanocytic",
+      "category_cs": "Melanocytární léze",
+      "diagnosis_count": 159,
+      "case_count": 260
+    },
+    {
+      "category": "epidermal-keratinocytic-adnexal",
+      "category_cs": "Epidermální, keratinocytární a adnexální léze",
+      "diagnosis_count": 299,
+      "case_count": 566
+    },
+    {
+      "category": "mesenchymal-vascular-neural-histiocytic",
+      "category_cs": "Mezenchymální, vaskulární, nervové a histiocytární léze",
+      "diagnosis_count": 221,
+      "case_count": 418
+    },
+    {
+      "category": "hematolymphoid-systemic-metastatic-rare",
+      "category_cs": "Hematolymfoidní, systémová, metastatická a ostatní vzácná onemocnění",
+      "diagnosis_count": 342,
+      "case_count": 414
+    }
+  ]
+}
