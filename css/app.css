@@ -53,13 +53,16 @@ h1,h2,h3,h4,h5 { line-height:1.25; }
 .subcategory { scroll-margin-top:70px; }
 .subcategory > h2 { margin:2.5rem 0 .75rem; font-size:1.45rem; }
 .diagnosis { scroll-margin-top:72px; border:1px solid var(--line); border-radius:7px; background:white; margin:.65rem 0; overflow:hidden; box-shadow:var(--shadow); }
-.diagnosis-toggle { display:flex; width:100%; min-height:70px; align-items:center; justify-content:space-between; gap:1rem; padding:1rem; border:0; background:white; text-align:left; cursor:pointer; }
+.diagnosis-toggle { display:flex; width:100%; min-height:70px; align-items:center; gap:1rem; padding:1rem; border:0; background:white; text-align:left; cursor:pointer; }
 .diagnosis-toggle:hover,.diagnosis-toggle:focus-visible { background:var(--soft); }
 .diagnosis-toggle strong,.diagnosis-toggle small { display:block; }
 .diagnosis-toggle small { color:var(--muted); margin-top:.15rem; }
-.diagnosis-count { flex:none; color:var(--blue); font-size:.9rem; }
-.diagnosis-toggle::after { content:"+"; flex:none; font-size:1.4rem; color:var(--blue); }
-.diagnosis-toggle[aria-expanded="true"]::after { content:"−"; }
+.diagnosis-name { flex:1 1 auto; min-width:0; }
+.diagnosis-actions { display:flex; flex:none; align-items:center; gap:.75rem; margin-left:auto; }
+.diagnosis-count { color:var(--blue); font-size:.9rem; white-space:nowrap; text-align:right; }
+.diagnosis-icon { width:1rem; color:var(--blue); font-size:1.4rem; line-height:1; text-align:center; }
+.diagnosis-toggle[aria-expanded="true"] .diagnosis-icon { font-size:0; }
+.diagnosis-toggle[aria-expanded="true"] .diagnosis-icon::after { content:"−"; font-size:1.4rem; }
 .diagnosis-content { padding:0 1rem 1rem; border-top:1px solid var(--line); background:#f7fafb; }
 .case-card { margin:1rem 0; padding:1rem; border:1px solid var(--line); border-radius:7px; background:white; }
 .case-card h4 { margin:0 0 1rem; font-size:1.2rem; }
